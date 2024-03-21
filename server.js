@@ -29,7 +29,7 @@ http
                     if(error){
                         response.end(error)
                     } else {
-                        response.end(parseBody.conTents)
+                        response.end(parseBody.randomText)
                     }
                 })
             })
@@ -44,14 +44,20 @@ http
                     if(error){
                         response.end(error)
                     } else {
-                        fs.writeFile(parseBody.secondFileName,parseBody.randomText,function(error){
+                        fs.writeFile(`./content/${parseBody.secondFileName}`,parseBody.randomText,function(error){
                             if(error){
                                 response.end(error)
                             } else {
                                 response.end(parseBody.randomText)
-                                // setTimeout(function(){
-                                //     fs.rmdir()
-                                // },7000)
+                                setTimeout(function(){
+                                    fs.rmdir(parseBody.folderName,{recursive:true},function(error){
+                                        if(error){
+                                            response.end(error)
+                                        } else {
+                                            response.end("File is Deleted")
+                                        }
+                                    })
+                                },7000)
                             }
                         })
                     }
